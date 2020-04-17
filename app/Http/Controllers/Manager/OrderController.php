@@ -21,14 +21,28 @@ class OrderController extends BaseController
     {
         $data = $request->only('pageSize');
         $list = DB::table('order')
+            ->orderBy("id", "desc")
             ->paginate($data['pageSize']);
         foreach ($list as $v) {
-            $v->menu = DB::table('order_info')->where('order_info.oid', '=', $v->id)
+            $v->menu     = DB::table('order_info')->where('order_info.oid', '=', $v->id)
                 ->leftJoin('menus', 'menus.id', '=', 'order_info.mid')
                 ->leftJoin('menus_class', 'menus_class.id', '=', 'menus.class_id')
-                ->select( "order_info.num", "order_info.money as order_info_money", "menus.img", "menus.name as menus_name",
-                    "menus_class.class_name")->get();
+                ->select("order_info.num", "order_info.money as order_info_money", "menus.img", "menus.name as menus_name",
+                    "menus_class.class_name")
+                ->get();
+            $v->pay_type = $this->getPayType($v->pay_type);
         }
         return $this->returnArray(200, '', $list);
+    }
+
+    public function getPayType($name)
+    {
+        switch ($name) {
+            case "paynow":
+                return "paynow";
+            case "cash_on_delivery":
+                return "货到付款";
+        }
+        return "货到付款";
     }
 }
