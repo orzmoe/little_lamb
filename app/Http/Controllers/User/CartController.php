@@ -30,7 +30,7 @@ class CartController extends BaseController
             $data['num'][$k] = $this->id2num($v->id, $requestData);
         }
 
-        $data['tax']  = bcmul($money, env("TAX"), 2);
+        $data['tax']  = bcmul($money, env("TAX"), 0);
         $data['ship'] = "$0";
         if ($money < 10000) {
             if ($requestData['lang'] == 'en') {
@@ -63,7 +63,7 @@ class CartController extends BaseController
             $context .= $v->name . " X " . $menu[$k]->num . "\n";
         }
 
-        $tax  = bcmul($money, env("TAX"), 2);
+        $tax  = bcmul($money, env("TAX"), 0);
         $ship = 0;
         if ($money < 10000) {
             $ship = env("SHIP");
