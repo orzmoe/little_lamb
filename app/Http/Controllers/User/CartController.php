@@ -94,7 +94,7 @@ class CartController extends BaseController
         $data['money']  = $money / 100;
         $data['remark'] = $order->remark;
         //$data['payType'] = $this->getPayType($order->pay_type);
-        $data['info']    = "\n手机号：$order->phone\n姓名：$order->name\n地址：$order->address\n人数：$order->people\n支付方式:$this->getPayType($order->pay_type)";
+        $data['info']    = "\n手机号：$order->phone\n姓名：$order->name\n地址：$order->address\n人数：$order->people\n支付方式:" . $this->getPayType($order->pay_type);
         $data['context'] = rtrim($context, "\n");
         $this->curlGet("http://manage.littlelamb.sg/web/newOrder", $data);
         return $this->returnArray(200, '提交成功', []);
