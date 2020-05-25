@@ -40,7 +40,8 @@ class CartController extends BaseController
             }
         }
         $data["money"] = $money;
-        $data["total"] = bcadd($money, $data['tax'], 2);
+        $data["total"] = round(bcadd($money, $data['tax'], 2) / 100, 2) * 100;
+
 
         return $this->returnArray(200, '', $data);
     }
@@ -69,7 +70,7 @@ class CartController extends BaseController
             $ship = env("SHIP");
         }
         $money = bcadd($money, $tax, 2);
-
+        $money = round(bcadd($money, $tax, 2) / 100, 2) * 100;
         $order           = new Order();
         $order->phone    = $requestData['phone'];
         $order->name     = $requestData['name'];
