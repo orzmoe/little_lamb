@@ -69,7 +69,7 @@ class CartController extends BaseController
         if ($money < 10000) {
             $ship = env("SHIP");
         }
-        $money = bcadd($money, $tax, 2);
+        //$money = bcadd($money, $tax, 2);
         $money = round(bcadd($money, $tax, 2) / 100, 2) * 100;
         $order           = new Order();
         $order->phone    = $requestData['phone'];
