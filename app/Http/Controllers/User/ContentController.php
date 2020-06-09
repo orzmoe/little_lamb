@@ -25,7 +25,7 @@ class ContentController extends BaseController
             ->get();
         foreach ($list as $v) {
             $v->time = date("F d,Y", strtotime($v->created_at));
-            $v->desc = $this->CloseTags($v->content);
+            $v->desc = mb_substr(strip_tags($v->content),0,90);
         }
         return $this->returnArray(200, '', $list);
     }
